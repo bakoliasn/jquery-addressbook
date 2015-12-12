@@ -1,3 +1,15 @@
+$button-color: #17A697;
+$nav-color: #178A8A;
+$bg-color: rgba(99, 140, 166, 0.8);
+$article-color: #BFD4D9;
+$dark-red: #94222C;
+
+body {
+    height: 100%;
+    
+}
+
+
 .entry-table {
     th, td {
         vertical-align: top;
@@ -17,4 +29,111 @@
     &__text {
         font-family: sans-serif;
     }
+}
+
+nav {
+    background-color: $nav-color;
+    width: 100%;
+    height: 4em;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    padding: 0.6em;
+    
+    h1 {
+        left: 10px;
+        color: white;
+        display: inline;
+        font-family: "Lato";
+    }
+    
+        
+    button {
+        display: inline;
+        background-color: $button-color;
+        padding: 5px;
+        color: white;
+        font-weight: bold;
+        border-radius: 2px;
+        border: 1px solid white;
+        float: right;
+        padding: 0.5em;
+        margin: 0.5em;
+        
+        &.sign-up-button {
+            background-color: $dark-red;
+        }
+    }
+    
+}
+
+
+#app {
+    position: relative;
+    min-height: 90vh;
+    top: 4em;
+    overflow: hidden;
+    padding: 1em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: space-around;
+    align-items: flex-start;
+    z-index: -1;
+    background-color: $bg-color;
+    
+    &:not.col {
+        opacity: 0.8;
+    }
+    
+}
+    
+.col {
+    min-width: 30%;
+    margin: 1em;
+    
+    .books {
+        min-height: 20vh;
+    }
+    
+    .people {
+        min-height: 20vh;
+    }
+    
+    .entries {
+        min-height: 20vh;
+    }
+}
+
+.vert-line {
+    width: 10px;
+    background-color: $nav-color;
+    opacity: 0.5;
+    margin-top: 15px;
+}
+        
+article {
+    margin: 1em 0.1em 1em 0.1em;
+    padding: 10px;
+    min-height: 20vh;
+    min-width: 5vw;
+    border: 1px solid black;
+    // box-shadow: 3px 3px 5px 6px #ccc;
+    background-color: $article-color;
+    
+}
+
+.selected {
+    box-shadow: inset 0 0 10px #000000;
+}
+
+footer {
+    background-color: $nav-color;
+    width: 100%;
+    height: 2em;
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+    padding: 0.6em;
 }
