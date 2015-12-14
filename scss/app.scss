@@ -129,6 +129,7 @@ nav {
 }
 
 .vert-line {
+    height: 0;
     min-width: 10px;
     background-color: $nav-color;
     opacity: 0.3;
@@ -138,7 +139,7 @@ nav {
 article {
     margin: 1em 0.1em 1em 0.1em;
     padding: 1em;
-    min-width: 4vw;
+    min-width: 100%;
     border: 1px solid black;
     box-shadow: 3px 3px 5px 6px #ccc;
     background-color: $article-color;
