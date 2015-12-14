@@ -1,5 +1,14 @@
 # jQuery Address Book
 
+## IDEA ZONE ######################################
+
+-attach class to article at time of query to include icons in top right corner
+-attach .selected class to articles and also remove 
+-add edit and remove functions (Via cog icon and toolbar.js http://paulkinzett.github.io/toolbar/!)
+-add map to address entries (http://hpneo.github.io/gmaps/examples/static.html)
+
+###################################################
+
 ## Introduction
 This is the skeleton for an address book front-end application based on [the address book API](https://loopback-rest-api-demo-ziad-saab.c9.io/explorer/).
 

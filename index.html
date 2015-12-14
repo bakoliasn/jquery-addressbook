@@ -1,73 +1,87 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DecodeMTL Address Book</title>
-    <link href='https://fonts.googleapis.com/css?family=Lato:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="css/app.css" />
-  </head>
-  <body>
-    <nav>
-        <h1 class="page-title">inTouch</h1>
 
-        <button class="login-button">Login</button>
-        <button class="sign-up-button">Sign Up</button>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DecodeMTL Address Book</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:900' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/fa/css/font-awesome.min.css" type="text/css" />
+</head>
 
-    </nav>
+<body>
+  <nav>
+    <h1 class="page-title">inTouch</h1>
+    <span class="logo fa-stack fa-lg">
+  <i class="fa fa-square-o fa-stack-2x"></i>
+  <i class="fa fa-globe fa-stack-1x"></i>
+</span>
 
-    <div id="app">
-      <!-- our javascript code will be modifying the content of this div -->
-      
-      <div class="col" id="first-col">
-        <article class="books">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-          sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-          magna aliquam erat volutpat. 
-        </article>
-      </div>
-      
-      <div class="vert-line"></div>
-      
-      <div class="col" id="mid-col">
-        <article class="people">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-          sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-          magna aliquam erat volutpat. 
-        </article>
-        <article class="people">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-          sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-          magna aliquam erat volutpat. 
-        </article>
-      </div>
-      
-      <div class="vert-line"></div>
-      
-      <div class="col" id="last-col">
-        <article class="entries">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-          sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-          magna aliquam erat volutpat.
-          </article>
-          <article class="entries">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-          sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-          magna aliquam erat volutpat.
-          </article>
-          <article class="entries">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-          sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-          magna aliquam erat volutpat.
-          </article>
-      </div>
-      
+    <button class="login-button"><a>Login</a></button>
+    <button class="sign-up-button"><a>Sign Up</a></button>
+
+  </nav>
+
+  <div id="app">
+    <!-- our javascript code will be modifying the content of this div -->
+
+    <div class="col" id="first-col">
+      <article class="books">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+      </article>
     </div>
-    
-    <footer></footer>
 
-    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-    <!-- script src="js/app.js"></script -->
-    <script src="js/styles.js"></script>
-  </body>
+    <div class="vert-line"></div>
+
+    <div class="col" id="mid-col">
+      <article class="people">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+      </article>
+      <article class="people">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+      </article>
+    </div>
+
+    <div class="vert-line"></div>
+
+    <div class="col" id="last-col">
+      
+      <div class="content">
+        
+        <article class="entries">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+        </article>
+        <article class="entries">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+        </article>
+        <article class="entries">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+        </article>
+        <article class="entries">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+        </article>
+        <article class="entries">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+        </article>
+        <article class="entries">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+        </article>
+        
+      </div>
+
+      <div class="page_navigation entries" id="pg-nav"></div>
+
+    </div>
+
+  </div>
+
+  <footer></footer>
+
+  <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+  <!-- script src="js/app.js"></script -->
+  <script type="text/javascript" src="pajinate/jquery.pajinate.min.js"></script>
+  <script src="js/styles.js"></script>
+</body>
+
 </html>

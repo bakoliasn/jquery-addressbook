@@ -10,6 +10,10 @@ body {
     height: 100%;   
 }
 
+a:hover {
+        opacity: 0.8;
+    }
+
 .entry-table {
     th, td {
         vertical-align: top;
@@ -51,7 +55,15 @@ nav {
         color: white;
         display: inline;
         font-family: "Lato";
-        margin: 0;
+        margin: 5px 0 0 0;
+    }
+    
+    i {
+        color: white;
+    }
+    
+    span {
+        top: -5px;
     }
     
         
@@ -91,7 +103,6 @@ nav {
     justify-content: center;
     align-content: space-around;
     align-items: flex-start;
-    z-index: -1;
     background-color: $bg-color;
     
     &:not.col {
@@ -133,6 +144,22 @@ article {
     background-color: $article-color;
 }
 
+#pg-nav {
+    margin-left: 15%;
+    padding: 0;
+    
+    a {
+        padding:3px 10px;
+        margin:2px;
+        color:white;
+        text-decoration:none;
+        float: left;
+        font-family: Tahoma;
+        font-size: 12px;
+        background-color:$button-color;
+    }
+}
+
 @media screen and (max-width: 900px) {
     nav {
         font-size: 0.75rem;
@@ -143,6 +170,10 @@ article {
     }
     .vert-line {
         display: none;
+    }
+    
+    #pg-nav {
+    margin-left: 25%;
     }
 }
 
