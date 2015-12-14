@@ -36,7 +36,9 @@ function getEntryAddress(entryId) {
 
 
 //edit
-
+function editAddressBook(addressBookId){
+    return $.putJSON(API_URL + '/AddressBooks/' + addressBookId, {})
+}
 
 
 
