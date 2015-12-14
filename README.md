@@ -1,9 +1,3 @@
-TO ADD:
-fade
-
-
-
-
 
 # jQuery Address Book
 

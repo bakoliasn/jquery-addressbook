@@ -22,15 +22,15 @@ function getEntry(addressBookId, entryId) {
 }
 
 function getEntryPhone(entryId) {
-    return $.getJSON(API_URL + '/Entries/' + entryId + '/phones')
+    return $.getJSON(API_URL + '/Entries/' + entryId + '/phones');
 }
 
 function getEntryEmail(entryId) {
-    return $.getJSON(API_URL + '/Entries/' + entryId + '/emails')
+    return $.getJSON(API_URL + '/Entries/' + entryId + '/emails');
 }
 
 function getEntryAddress(entryId) {
-    return $.getJSON(API_URL + '/Entries/' + entryId + '/addresses')
+    return $.getJSON(API_URL + '/Entries/' + entryId + '/addresses');
 }
 // End data retrieval functions
 
@@ -50,6 +50,8 @@ function displayAddressBooksList() {
 }
 
 $(document).on('click', '.books', function() {
+    $('.selected').toggleClass('selected');
+    $(this).toggleClass('selected');
     var bookId = $(this).data('id');
     displayAddressBook(bookId);
 });
@@ -67,6 +69,9 @@ function displayAddressBook(addressBookId) {
 }
 
 $(document).on('click', '.people', function() {
+    $(this).siblings('.selected').toggleClass('selected');
+
+    $(this).toggleClass('selected');
     var peopleId = $(this).data('id');
     displayEntry(peopleId);
 });
