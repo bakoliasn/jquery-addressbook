@@ -35,6 +35,19 @@ function getEntryAddress(entryId) {
 // End data retrieval functions
 
 
+//edit
+
+
+
+
+
+//delete
+
+
+
+
+
+
 
 
 // Functions that display things on the screen (views)
@@ -95,6 +108,11 @@ function displayEntry(entryId) {
         });
     });
 }
+
+$(document).on('click', '.entries', function() {
+    $(this).siblings('.selected').toggleClass('selected');
+    $(this).toggleClass('selected');
+});
 // End functions that display views
 
 
