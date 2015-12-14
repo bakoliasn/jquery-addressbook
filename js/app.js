@@ -61,7 +61,13 @@ function displayAddressBooksList() {
             addressBooks.forEach(function(ab) {
                 $('#first-col .content').append('<article class="books" data-id=' + ab.id + ' >ID: ' + ab.id + ' Name: ' + ab.name + '</article>');
             });
-        });
+        }).then(
+        function(){
+				$('#first-col').pajinate({
+				  items_per_page: 3
+				});
+			});
+			
 }
 
 $(document).on('click', '.books', function() {
@@ -76,11 +82,15 @@ function displayAddressBook(addressBookId) {
     getEntries(addressBookId).then(function(result) {
         $('#last-col .content').html('');
         $('#mid-col').html('<h2>People</h2><div class="content"></div><div class="page_navigation entries" id="pg-nav"></div>');
-        console.log(result);
         result.forEach(function(ab) {
             $('#mid-col .content').append('<article class="people" data-id=' + ab.id + '>' + ab.lastName + ', ' + ab.firstName + '</article');
         });
-    });
+    }).then(
+        function(){
+				$('#mid-col').pajinate({
+				  items_per_page: 3
+				});
+			});
 }
 
 $(document).on('click', '.people', function() {
@@ -108,7 +118,12 @@ function displayEntry(entryId) {
         result.forEach(function(ab) {
             $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '>' + ab.type + ': ' + ab.email + '</article>');
         });
-    });
+    }).then(
+        function(){
+				$('#last-col').pajinate({
+				  items_per_page: 3
+				});
+			});
 }
 
 $(document).on('click', '.entries', function() {
@@ -124,4 +139,5 @@ $(document).on('click', '.entries', function() {
 // Start the app by displaying all the addressbooks
 // NOTE: This line is very important! So far, our code has only defined functions! This line calls the
 // function that displays the list of address books, effectively initializing our UI.
+
 displayAddressBooksList();
