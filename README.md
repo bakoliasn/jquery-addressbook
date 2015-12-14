@@ -6,7 +6,7 @@
 -attach .selected class to articles and also remove 
 -add edit and remove functions (Via cog icon and toolbar.js http://paulkinzett.github.io/toolbar/!)
 -add map to address entries (http://hpneo.github.io/gmaps/examples/static.html)
-
+-fade left jquery: http://git.blivesta.com/animsition/slide-top/
 ###################################################
 
 ## Introduction
