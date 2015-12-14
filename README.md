@@ -1,10 +1,3 @@
-TO ADD:
-fade
-
-
-
-
-
 # jQuery Address Book
 
 ## IDEA ZONE ######################################
