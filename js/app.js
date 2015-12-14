@@ -13,16 +13,24 @@ function getAddressBooks() {
     return $.getJSON(API_URL + '/AddressBooks');
 }
 
-function getAddressBook(id) {
-    return $.getJSON(API_URL + '/AddressBooks/' + id);
-}
-
 function getEntries(addressBookId) {
-    // TODO... perhaps by using a GET to /AddressBooks/:id/entries :)
+    return $.getJSON(API_URL + '/AddressBooks/' + addressBookId + '/entries');
 }
 
-function getEntry(entryId) {
-    // TODO..
+function getEntry(addressBookId, entryId) {
+    return $.getJSON(API_URL + '/AddressBooks/' + addressBookId + '/entries/' + entryId);
+}
+
+function getEntryPhone(entryId) {
+    return $.getJSON(API_URL + '/Entries/' + entryId + '/phones')
+}
+
+function getEntryEmail(entryId) {
+    return $.getJSON(API_URL + '/Entries/' + entryId + '/emails')
+}
+
+function getEntryAddress(entryId) {
+    return $.getJSON(API_URL + '/Entries/' + entryId + '/addresses')
 }
 // End data retrieval functions
 
@@ -33,29 +41,53 @@ function getEntry(entryId) {
 function displayAddressBooksList() {
     getAddressBooks().then(
         function(addressBooks) {
-            
-            $app.html(''); // Clear the #app div
-            $app.append('<h2>Address Books List</h2>');
-            $app.append('<ul>');
-            
+
+            $('#first-col').append('<h2>Address Books List</h2>');
             addressBooks.forEach(function(ab) {
-                $app.find('ul').append('<li data-id="' + ab.id + '">' + ab.name + '</li>');
+                $('#first-col').append('<article class="books" data-id=' + ab.id + ' >ID: ' + ab.id + ' Name: ' + ab.name + '</article>');
             });
-            
-            $app.find('li').on('click', function() {
-                var addressBookId = $(this).data('id');
-                displayAddressBook(addressBookId);
-            });
-        }
-    )
+        });
 }
+
+$(document).on('click', '.books', function() {
+    var bookId = $(this).data('id');
+    displayAddressBook(bookId);
+});
+
 
 function displayAddressBook(addressBookId) {
-    
+    getEntries(addressBookId).then(function(result) {
+        $('#last-col').html('');
+        $('#mid-col').html('<h2>People</h2>');
+        result.forEach(function(ab) {
+            $('#mid-col').append('<article class="people" data-id=' + ab.id + '>' + ab.lastName + ', ' + ab.firstName + '</article');
+        });
+    });
 }
 
-function displayEntry() {
-    
+$(document).on('click', '.people', function() {
+    var peopleId = $(this).data('id');
+    displayEntry(peopleId);
+});
+
+
+function displayEntry(entryId) {
+    $('#last-col').html('<h2>Entries</h2>');
+    getEntryPhone(entryId).then(function(result) {
+        result.forEach(function(ab) {
+            $('last-col').append('<article class="entries" data-id=' + ab.id + '>' + ab.phoneType + ': ' + ab.phoneNumber + '</article>');
+        });
+    });
+    getEntryAddress(entryId).then(function(result) {
+        result.forEach(function(ab) {
+            $('last-col').append('<article class="entries" data-id=' + ab.id + '><p>' + ab.type + '</p><p>' + ab.line1 + ' ' + ab.line2 + '</p><p>' + ab.city + ' ' + ab.state + ' ' + ab.country + '</p><p>' + ab.zip + '</p></article>');
+        });
+    });
+    getEntryEmail(entryId).then(function(result) {
+        result.forEach(function(ab) {
+            $('last-col').append('<article class="entries" data-id=' + ab.id + '>' + ab.type + ': ' + ab.email + '</article>');
+        });
+    });
 }
 // End functions that display views
 
