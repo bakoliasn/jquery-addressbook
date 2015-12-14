@@ -42,9 +42,9 @@ function displayAddressBooksList() {
     getAddressBooks().then(
         function(addressBooks) {
 
-            $('#first-col').append('<h2>Address Books List</h2>');
+            $('#first-col').prepend('<h2>Address Books List</h2>');
             addressBooks.forEach(function(ab) {
-                $('#first-col').append('<article class="books" data-id=' + ab.id + ' >ID: ' + ab.id + ' Name: ' + ab.name + '</article>');
+                $('#first-col .content').append('<article class="books" data-id=' + ab.id + ' >ID: ' + ab.id + ' Name: ' + ab.name + '</article>');
             });
         });
 }
@@ -57,10 +57,11 @@ $(document).on('click', '.books', function() {
 
 function displayAddressBook(addressBookId) {
     getEntries(addressBookId).then(function(result) {
-        $('#last-col').html('');
-        $('#mid-col').html('<h2>People</h2>');
+        $('#last-col .content').html('');
+        $('#mid-col').html('<h2>People</h2><div class="content"></div><div class="page_navigation entries" id="pg-nav"></div>');
+        console.log(result);
         result.forEach(function(ab) {
-            $('#mid-col').append('<article class="people" data-id=' + ab.id + '>' + ab.lastName + ', ' + ab.firstName + '</article');
+            $('#mid-col .content').append('<article class="people" data-id=' + ab.id + '>' + ab.lastName + ', ' + ab.firstName + '</article');
         });
     });
 }
@@ -72,20 +73,20 @@ $(document).on('click', '.people', function() {
 
 
 function displayEntry(entryId) {
-    $('#last-col').html('<h2>Entries</h2>');
+    $('#last-col').html('<h2>Entries</h2><div class="content"></div><div class="page_navigation entries" id="pg-nav"></div>');
     getEntryPhone(entryId).then(function(result) {
         result.forEach(function(ab) {
-            $('last-col').append('<article class="entries" data-id=' + ab.id + '>' + ab.phoneType + ': ' + ab.phoneNumber + '</article>');
+            $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '>' + ab.phoneType + ': ' + ab.phoneNumber + '</article>');
         });
     });
     getEntryAddress(entryId).then(function(result) {
         result.forEach(function(ab) {
-            $('last-col').append('<article class="entries" data-id=' + ab.id + '><p>' + ab.type + '</p><p>' + ab.line1 + ' ' + ab.line2 + '</p><p>' + ab.city + ' ' + ab.state + ' ' + ab.country + '</p><p>' + ab.zip + '</p></article>');
+            $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '><p>' + ab.type + '</p><p>' + ab.line1 + ' ' + ab.line2 + '</p><p>' + ab.city + ' ' + ab.state + ' ' + ab.country + '</p><p>' + ab.zip + '</p></article>');
         });
     });
     getEntryEmail(entryId).then(function(result) {
         result.forEach(function(ab) {
-            $('last-col').append('<article class="entries" data-id=' + ab.id + '>' + ab.type + ': ' + ab.email + '</article>');
+            $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '>' + ab.type + ': ' + ab.email + '</article>');
         });
     });
 }
