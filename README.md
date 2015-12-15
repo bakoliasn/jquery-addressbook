@@ -1,5 +1,5 @@
 add,edit and delete buttons
-
+deselect 
 
 
 # jQuery Address Book
