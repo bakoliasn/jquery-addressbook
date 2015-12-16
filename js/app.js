@@ -125,17 +125,22 @@ $(document).on('submit', '#editAddressBooks', function(e) {
 //addPeople
 function addPeople(info) {
     return $.post(API_URL + '/Entries', {
-       
-  firstName: info.firstName,
-  lastName: info.lastName,
-  birthday: info.birthday,
-  addressBookId: $('#first-col .content .selected').data('id')
- 
+
+        firstName: info.firstName,
+        lastName: info.lastName,
+        birthday: info.birthday,
+        addressBookId: $('#first-col .content .selected').data('id')
+
     });
 }
 
-$(document).on('click', '#addPeople', function(){
-    $('#form').html('<form id="addPeoples" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Set First Name:</label><input type="text" name="firstName"><label>Set Last Name:</label><input type="text" name="lastName"><label>Set Birthday:</label><input type="text" name="birthday"><button type="submit" class="submitpeople" id="createP" >submit</button></form>').show();
+$(document).on('click', '#addPeople', function() {
+    if ($('#first-col .content .selected').data('id') > 0) {
+        $('#form').html('<form id="addPeoples" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Set First Name:</label><input type="text" name="firstName"><label>Set Last Name:</label><input type="text" name="lastName"><label>Set Birthday:</label><input type="text" name="birthday"><button type="submit" class="submitpeople" id="createP" >submit</button></form>').show();
+    }
+    else {
+        console.log("no addressbook selected")
+    }
 
 });
 
