@@ -39,12 +39,11 @@ function getEntryAddress(entryId) {
 
 
 
-//add addresss book!
 $(document).on('click', '#closeForm', function() {
     $('#form').hide();
 });
 
-
+//add addresss book!
 function addAddressBook(info) {
     return $.post(API_URL + '/AddressBooks', {
         "name": info
@@ -118,13 +117,17 @@ $(document).on('submit', '#editAddressBooks', function(e) {
     var temp = $('#first-col .selected').data('id');
     var name = $('#form form input[name="ABname"]').val();
     $('#form').hide('slow');
-    console.log(temp + " " + name);
     editAddressBook(temp, name);
 });
 
 
 
-
+//addPeople
+function addPeople(info) {
+    return $.post(API_URL + '/AddressBooks', {
+        name: info
+    });
+}
 
 
 
