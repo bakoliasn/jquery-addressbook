@@ -102,6 +102,9 @@ function editAddressBook(id, name) {
         type: 'PUT',
         success: function() {
             location.reload();
+        },
+        data: {
+            name: name
         }
     });
 }
@@ -110,13 +113,13 @@ $(document).on('click', '#editAb', function() {
     $('#form').html('<form id="editAddressBooks" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Set Address Book Name:</label><input type="text" name=ABname><button type="submit" class="submitAddressBook" id="editAddressBook">submit</button></form>').show();
 });
 
-$(document).on('submit', '#editAddressBook', function(e) {
+$(document).on('submit', '#editAddressBooks', function(e) {
     e.preventDefault();
     var temp = $('#first-col .selected').data('id');
     var name = $('#form form input[name="ABname"]').val();
     $('#form').hide('slow');
-    alert(temp + " " + name);
-    // editAddressBook(temp, name);
+    console.log(temp + " " + name);
+    editAddressBook(temp, name);
 });
 
 
