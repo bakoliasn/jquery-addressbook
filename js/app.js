@@ -124,6 +124,8 @@ $(document).on('submit', '#editAddressBooks', function(e) {
 
 //addPeople
 function addPeople(info) {
+    console.log(info);
+    console.log($('#first-col .content .selected').data('id'));
     return $.post(API_URL + '/Entries', {
 
         firstName: info.firstName,
@@ -136,10 +138,10 @@ function addPeople(info) {
 
 $(document).on('click', '#addPeople', function() {
     if ($('#first-col .content .selected').data('id') > 0) {
-        $('#form').html('<form id="addPeoples" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Set First Name:</label><input type="text" name="firstName"><label>Set Last Name:</label><input type="text" name="lastName"><label>Set Birthday:</label><input type="text" name="birthday"><button type="submit" class="submitpeople" id="createP" >submit</button></form>').show();
+        $('#form').html('<form id="addPeoples" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Set First Name:</label><input type="text" name="firstName"><label>Set Last Name:</label><input type="text" name="lastName"><label>Set Birthday:</label><input type="date" name="birthday"><button type="submit" id="createP" >submit</button></form>').show();
     }
     else {
-        console.log("no addressbook selected")
+        console.log("no addressbook selected");
     }
 
 });
@@ -151,11 +153,76 @@ $(document).on('submit', '#addPeoples', function(e) {
         lastName: $('#form form input[name="lastName"]').val(),
         birthday: $('#form form input[name="birthday"]').val()
     };
-    console.log(info);
     addPeople(info);
     $('#form').hide('slow');
     location.reload();
 });
+
+
+
+// delete people
+$(document).on('click', '#deleteP', function() {
+    var id = $(this).data('id');
+    var con = confirm('are you sure you want to delete Person# ' + id + '???');
+    if (con) {
+        deletePeople(id);
+    }
+});
+
+function deletePeople(id) {
+    return $.ajax({
+        url: API_URL + "/Entries/" + id,
+        type: "DELETE",
+        success: function() {
+            location.reload();
+        }
+    });
+}
+//edit people
+function editPerson(id, info) {
+    return $.ajax({
+        url: API_URL + "/Entries/" + id,
+        type: 'PUT',
+        success: function() {
+            location.reload();
+        },
+        data: {
+            firstName: info.firstName,
+            lastName: info.lastName,
+            birthday: info.birthday,
+            addressBookId: $('#first-col .content .selected').data('id')
+        }
+    });
+}
+
+$(document).on('click', '#editP', function() {
+    $('#form').html('<form id="editPeoples" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Set First Name:</label><input type="text" name="firstName"><label>Set Last Name:</label><input type="text" name="lastName"><label>Set Birthday:</label><input type="date" name="birthday"><button type="submit" >submit</button></form>').show();
+});
+
+
+$(document).on('submit', '#editPeoples', function(e) {
+    e.preventDefault();
+    var temp = $('#mid-col .content .selected').data('id');
+    var info = {
+        firstName: $('#form form input[name="firstName"]').val(),
+        lastName: $('#form form input[name="lastName"]').val(),
+        birthday: $('#form form input[name="birthday"]').val()
+    };
+    $('#form').hide('slow');
+    editPerson(temp, info);
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -223,7 +290,7 @@ function displayAddressBook(addressBookId) {
 }
 
 $(document).on('click', '.people', function() {
-    if ($(event.target).is('#editP') || $(event.target).is('#deleteAb')) {
+    if ($(event.target).is('#editP') || $(event.target).is('#deleteP')) {
 
     }
     else {
@@ -280,7 +347,7 @@ function displayEntry(entryId) {
 
 
 $(document).on('click', '.entries', function() {
-    if ($(event.target).is('#editAb') || $(event.target).is('#deleteAb')) {
+    if ($(event.target).is('#editE') || $(event.target).is('#deleteE')) {
 
     }
     else {

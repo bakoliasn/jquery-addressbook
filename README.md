@@ -1,7 +1,8 @@
 add,edit and delete buttons
 search
 favorites
-fix entries to hide when people is deselected.
+unnessicary classes on form
+add defaults to the forms with "selected"
 
 
 # jQuery Address Book
