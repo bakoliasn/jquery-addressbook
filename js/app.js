@@ -124,14 +124,33 @@ $(document).on('submit', '#editAddressBooks', function(e) {
 
 //addPeople
 function addPeople(info) {
-    return $.post(API_URL + '/AddressBooks', {
-        name: info
+    return $.post(API_URL + '/Entries', {
+       
+  firstName: info.firstName,
+  lastName: info.lastName,
+  birthday: info.birthday,
+  addressBookId: $('#first-col .content .selected').data('id')
+ 
     });
 }
 
+$(document).on('click', '#addPeople', function(){
+    $('#form').html('<form id="addPeoples" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Set First Name:</label><input type="text" name="firstName"><label>Set Last Name:</label><input type="text" name="lastName"><label>Set Birthday:</label><input type="text" name="birthday"><button type="submit" class="submitpeople" id="createP" >submit</button></form>').show();
 
+});
 
-
+$(document).on('submit', '#addPeoples', function(e) {
+    e.preventDefault();
+    var info = {
+        firstName: $('#form form input[name="firstName"]').val(),
+        lastName: $('#form form input[name="lastName"]').val(),
+        birthday: $('#form form input[name="birthday"]').val()
+    };
+    console.log(info);
+    addPeople(info);
+    $('#form').hide('slow');
+    location.reload();
+});
 
 
 
@@ -225,21 +244,21 @@ function displayEntry(entryId) {
 
     getEntryPhone(entryId).then(function(result) {
         result.forEach(function(ab) {
-            $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editAb" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteAb" data-id=' + ab.id + '></i>' + ab.phoneType + ': ' + ab.phoneNumber + '</article>');
+            $('#last-col .content').append('<article class="entries phoneEntry" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editAb" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteAb" data-id=' + ab.id + '></i>' + ab.phoneType + ': ' + ab.phoneNumber + '</article>');
         });
 
         return getEntryAddress(entryId);
     }).then(function(result) {
 
         result.forEach(function(ab) {
-            $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editAb" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteAb" data-id=' + ab.id + '></i><p>' + ab.type + '</p><p>' + ab.line1 + ' ' + ab.line2 + '</p><p>' + ab.city + ' ' + ab.state + ' ' + ab.country + '</p><p>' + ab.zip + '</p></article>');
+            $('#last-col .content').append('<article class="entries addressEntry" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editAb" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteAb" data-id=' + ab.id + '></i><p>' + ab.type + '</p><p>' + ab.line1 + ' ' + ab.line2 + '</p><p>' + ab.city + ' ' + ab.state + ' ' + ab.country + '</p><p>' + ab.zip + '</p></article>');
         });
 
         return getEntryEmail(entryId);
     }).then(function(result) {
 
         result.forEach(function(ab) {
-            $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editAb" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteAb" data-id=' + ab.id + '></i>' + ab.type + ': ' + ab.email + '</article>');
+            $('#last-col .content').append('<article class="entries emailEntry" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editAb" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteAb" data-id=' + ab.id + '></i>' + ab.type + ': ' + ab.email + '</article>');
         });
 
         $('#last-col').pajinate({
