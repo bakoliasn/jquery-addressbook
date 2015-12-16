@@ -166,6 +166,7 @@ article {
         display: none;
         float: right;
         opacity: 0.8;
+        margin: 10px;
         &:hover {
             cursor: pointer;
         }
@@ -213,7 +214,7 @@ article {
         i.fa {
             display: inline;
             padding: 1px;
-            margin: -10px 1px 0 2px;
+            margin: -5px 1px 0 2px;
         }
 }
 
