@@ -207,7 +207,7 @@ function displayAddressBook(addressBookId) {
         $('#last-col .content').html('');
         $('#mid-col').html('<h2>People<i class="addButton fa fa-plus-square-o" id="addPeople"></h2><div class="content"></div><div class="page_navigation" id="pg-nav"></div>');
         result.forEach(function(ab) {
-            $('#mid-col .content').append('<article class="people" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editAb" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteAb" data-id=' + ab.id + '></i>' + ab.lastName + ', ' + ab.firstName + '</article');
+            $('#mid-col .content').append('<article class="people" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editP" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteP" data-id=' + ab.id + '></i>' + ab.lastName + ', ' + ab.firstName + '</article');
         });
     }).then(
         function() {
@@ -218,7 +218,7 @@ function displayAddressBook(addressBookId) {
 }
 
 $(document).on('click', '.people', function() {
-    if ($(event.target).is('#editAb') || $(event.target).is('#deleteAb')) {
+    if ($(event.target).is('#editP') || $(event.target).is('#deleteAb')) {
 
     }
     else {
