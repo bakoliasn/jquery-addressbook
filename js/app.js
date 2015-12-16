@@ -1,10 +1,7 @@
 // Set the API base url
 var API_URL = "https://loopback-rest-api-demo-ziad-saab.c9.io/api";
 
-// Get a reference to the <div id="app">. This is where we will output our stuff
-var $app = $('#app');
-
-
+// Get a reference to the
 
 
 
@@ -35,15 +32,101 @@ function getEntryAddress(entryId) {
 // End data retrieval functions
 
 
-//edit
-function editAddressBook(addressBookId){
-    return $.putJSON(API_URL + '/AddressBooks/' + addressBookId, {})
+
+
+
+
+
+
+
+//add addresss book!
+$(document).on('click', '#closeForm', function() {
+    $('#form').hide();
+});
+
+
+function addAddressBook(info) {
+    return $.post(API_URL + '/AddressBooks', {
+        "name": info
+    });
+}
+
+$(document).on('click', '#addAddressBook', function() {
+    $('#form').html('<form id="addAddressBooks" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Set Address Book Name:</label><input type="text" name="addressBookName"><button type="submit" class="submitAddressBook" id="createAb" >submit</button></form>').show();
+});
+
+$(document).on('submit', '#addAddressBooks', function(e) {
+    e.preventDefault();
+    var name = $('#form form input[name="addressBookName"]').val();
+    addAddressBook(name);
+    $('#form').hide('slow');
+    location.reload();
+});
+
+
+
+
+
+
+
+
+
+
+//delete address Book
+$(document).on('click', '#deleteAb', function() {
+    var id = $(this).data('id');
+    var con = confirm('are you sure you want to delete addressbook# ' + id + '???');
+    if (con) {
+        deleteAddressBook(id);
+    }
+});
+
+function deleteAddressBook(id) {
+    return $.ajax({
+        url: API_URL + "/AddressBooks/" + id,
+        type: "DELETE",
+        success: function() {
+            location.reload();
+        }
+    });
 }
 
 
 
 
-//delete
+
+//edit addressbook
+function editAddressBook(id, name) {
+    return $.ajax({
+        url: API_URL + "/AddressBooks/" + id,
+        type: 'PUT',
+        success: function() {
+            location.reload();
+        }
+    });
+}
+
+$(document).on('click', '#editAb', function() {
+    $('#form').html('<form id="editAddressBooks" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Set Address Book Name:</label><input type="text" name=ABname><button type="submit" class="submitAddressBook" id="editAddressBook">submit</button></form>').show();
+});
+
+$(document).on('submit', '#editAddressBook', function(e) {
+    e.preventDefault();
+    var temp = $('#first-col .selected').data('id');
+    var name = $('#form form input[name="ABname"]').val();
+    $('#form').hide('slow');
+    alert(temp + " " + name);
+    // editAddressBook(temp, name);
+});
+
+
+
+
+
+
+
+
+
 
 
 
@@ -57,78 +140,123 @@ function displayAddressBooksList() {
     getAddressBooks().then(
         function(addressBooks) {
 
-            $('#first-col').prepend('<h2>Address Books List</h2>');
+            $('#first-col').prepend('<h2>Address Books List<i class="addButton fa fa-plus-square-o" id="addAddressBook"></i></h2><div class="content"></div>');
             addressBooks.forEach(function(ab) {
-                $('#first-col .content').append('<article class="books" data-id=' + ab.id + ' >ID: ' + ab.id + ' Name: ' + ab.name + '</article>');
+                $('#first-col .content').append('<article class="books" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editAb" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteAb" data-id=' + ab.id + '></i>ID: ' + ab.id + 'Name: ' + ab.name + ' </article>');
+                // $('#editMenu').toolbar({
+                //     content: 'toolbar-options',
+                //     position: 'left',
+                //     animation: 'bounce',
+                //     event: 'click'
+                // });
             });
         }).then(
-        function(){
-				$('#first-col').pajinate({
-				  items_per_page: 3
-				});
-			});
-			
+        function() {
+            $('#first-col').pajinate({
+                items_per_page: 3
+            });
+        });
 }
 
 $(document).on('click', '.books', function() {
-    $('.selected').toggleClass('selected');
-    $(this).toggleClass('selected');
-    var bookId = $(this).data('id');
-    displayAddressBook(bookId);
+    if ($(event.target).is('#editAb') || $(event.target).is('#deleteAb')) {
+
+    }
+    else {
+        $(this).siblings('.selected').toggleClass('selected');
+        $(this).toggleClass('selected');
+        var bookId = $(this).data('id');
+        $('#mid-col .content').html('');
+        $('#last-col .content').html('');
+        $('#mid-col #pg-nav').html('');
+        $('#last-col #pg-nav').html('');
+        if ($(this).hasClass('selected')) {
+            displayAddressBook(bookId);
+        }
+    }
 });
 
 
 function displayAddressBook(addressBookId) {
     getEntries(addressBookId).then(function(result) {
         $('#last-col .content').html('');
-        $('#mid-col').html('<h2>People</h2><div class="content"></div><div class="page_navigation entries" id="pg-nav"></div>');
+        $('#mid-col').html('<h2>People</h2><div class="content"></div><div class="page_navigation" id="pg-nav"></div>');
         result.forEach(function(ab) {
-            $('#mid-col .content').append('<article class="people" data-id=' + ab.id + '>' + ab.lastName + ', ' + ab.firstName + '</article');
+            $('#mid-col .content').append('<article class="people" data-id=' + ab.id + '><i class="fa fa-gear" id="editMenu" data-id=' + ab.id + '></i>' + ab.lastName + ', ' + ab.firstName + '</article');
         });
     }).then(
-        function(){
-				$('#mid-col').pajinate({
-				  items_per_page: 3
-				});
-			});
+        function() {
+            $('#mid-col').pajinate({
+                items_per_page: 3
+            });
+        });
 }
 
 $(document).on('click', '.people', function() {
-    $(this).siblings('.selected').toggleClass('selected');
+    if ($(event.target).is('#editAb') || $(event.target).is('#deleteAb')) {
 
-    $(this).toggleClass('selected');
-    var peopleId = $(this).data('id');
-    displayEntry(peopleId);
+    }
+    else {
+        $(this).siblings('.selected').toggleClass('selected');
+        $(this).toggleClass('selected');
+        var peopleId = $(this).data('id');
+        console.log($('#last-col'));
+        $('#last-col .content').html('');
+        $('#last-col #pg-nav').html('');
+        if ($(this).hasClass('selected')) {
+            displayEntry(peopleId);
+        }
+
+    }
 });
 
 
+
+
+
 function displayEntry(entryId) {
-    $('#last-col').html('<h2>Entries</h2><div class="content"></div><div class="page_navigation entries" id="pg-nav"></div>');
+    $('#last-col').html('<h2>Entries</h2><div class="content"></div><div class="page_navigation" id="pg-nav"></div>');
+
     getEntryPhone(entryId).then(function(result) {
         result.forEach(function(ab) {
-            $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '>' + ab.phoneType + ': ' + ab.phoneNumber + '</article>');
+            $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '><i class="fa fa-gear" id="editMenu"></i>' + ab.phoneType + ': ' + ab.phoneNumber + '</article>');
+        });
+
+        return getEntryAddress(entryId);
+    }).then(function(result) {
+
+        result.forEach(function(ab) {
+            $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '><i class="fa fa-gear" id="editMenu"></i><p>' + ab.type + '</p><p>' + ab.line1 + ' ' + ab.line2 + '</p><p>' + ab.city + ' ' + ab.state + ' ' + ab.country + '</p><p>' + ab.zip + '</p></article>');
+        });
+
+        return getEntryEmail(entryId);
+    }).then(function(result) {
+
+        result.forEach(function(ab) {
+            $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '><i class="fa fa-gear" id="editMenu"></i>' + ab.type + ': ' + ab.email + '</article>');
+        });
+
+        $('#last-col').pajinate({
+            items_per_page: 3
         });
     });
-    getEntryAddress(entryId).then(function(result) {
-        result.forEach(function(ab) {
-            $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '><p>' + ab.type + '</p><p>' + ab.line1 + ' ' + ab.line2 + '</p><p>' + ab.city + ' ' + ab.state + ' ' + ab.country + '</p><p>' + ab.zip + '</p></article>');
-        });
-    });
-    getEntryEmail(entryId).then(function(result) {
-        result.forEach(function(ab) {
-            $('#last-col .content').append('<article class="entries" data-id=' + ab.id + '>' + ab.type + ': ' + ab.email + '</article>');
-        });
-    }).then(
-        function(){
-				$('#last-col').pajinate({
-				  items_per_page: 3
-				});
-			});
 }
 
+
+
+
+
+
+
+
 $(document).on('click', '.entries', function() {
-    $(this).siblings('.selected').toggleClass('selected');
-    $(this).toggleClass('selected');
+    if ($(event.target).is('#editAb') || $(event.target).is('#deleteAb')) {
+
+    }
+    else {
+        $(this).siblings('.selected').toggleClass('selected');
+        $(this).toggleClass('selected');
+    }
 });
 // End functions that display views
 
@@ -139,5 +267,4 @@ $(document).on('click', '.entries', function() {
 // Start the app by displaying all the addressbooks
 // NOTE: This line is very important! So far, our code has only defined functions! This line calls the
 // function that displays the list of address books, effectively initializing our UI.
-
 displayAddressBooksList();

@@ -1,5 +1,7 @@
 add,edit and delete buttons
-deselect 
+search
+favorites
+fix entries to hide when people is deselected.
 
 
 # jQuery Address Book

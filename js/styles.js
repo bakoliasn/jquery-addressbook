@@ -3,3 +3,10 @@ $(document).on('click', function() {
         $(this).height($(this).prev().height());
     });
 })
+
+$('#editMenu').toolbar({
+    content: 'toolbar-options',
+    position: 'right',
+    animation: 'bounce',
+    event: 'click'
+});
