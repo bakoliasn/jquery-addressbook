@@ -178,6 +178,9 @@ function deletePeople(id) {
         }
     });
 }
+
+
+
 //edit people
 function editPerson(id, info) {
     return $.ajax({
@@ -218,13 +221,115 @@ $(document).on('submit', '#editPeoples', function(e) {
 
 
 
+//Entries
+function addAddress(info) {
+    return $.ajax({
+        url: API_URL + "/Addresses",
+        type: "POST",
+        success: function() {
+            location.reload();
+        },
+        data: {
+            line1: info.line1,
+            line2: info.line2,
+            city: info.city,
+            state: info.state,
+            zip: info.zip,
+            country: info.country,
+            type: info.type,
+            entryId: $('#mid-col .content .selected').data('id')
+        }
+    });
+}
+
+function addPhone(info) {
+    return $.ajax({
+        url: API_URL + "/Phones",
+        type: "POST",
+        success: function() {
+            location.reload();
+        },
+        data: {
+            phoneNumber: info.phoneNumber,
+            type: info.type,
+            phoneType: info.phoneType,
+            entryId: $('#mid-col .content .selected').data('id')
+        }
+    });
+}
 
 
+function addEmail(info) {
+    return $.ajax({
+        url: API_URL + "/EmailAddresses",
+        type: "POST",
+        success: function() {
+            location.reload();
+        },
+        data: {
+            email: info.email,
+            type: info.type,
+            entryId: $('#mid-col .content .selected').data('id')
+        }
+    });
+}
+
+$(document).on('click', '#addEntry', function() {
+    $('#form').html('<form id="addEntryChoice" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Address</label><input type="radio" value="address" name="edit"><label>Phone</label><input type="radio" value="phone" name="edit"><label>Email</label><input type="radio" value="email" name="edit"><button type="submit" >submit</button></form>').show();
+});
+
+$(document).on('submit', '#addEntryChoice', function(e) {
+    e.preventDefault();
+    if ($('#form form input[name="edit"]:checked').val() === "address") {
+        $('#form').html('<form id="addEntryAddress" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Address line 1</label><input type="text" name="line1"><label>Address line 2</label><input type="text" name="line2"><label>City</label><input type="text" name="city"><label>state</label><input type="text" name="state"><label>zip</label><input type="text" name="zip"><label>country</label><input type="text" name="country"><label>Type</label><input type="text" name="type"><button type="submit" >submit</button></form>').show();
+    }
+    else if ($('#form form input[name="edit"]:checked').val() === "phone") {
+        $('#form').html('<form id="addEntryPhone" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Phone number</label><input type="text" name="phoneNumber"><label>Type</label><input type="text" name="type"><label>Phone type</label><input type="text" name="phoneType"><button type="submit" >submit</button></form>').show();
+    }
+    else if ($('#form form input[name="edit"]:checked').val() === "email") {
+        $('#form').html('<form id="addEntryEmail" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Email</label><input type="text" name="email"><label>Type</label><input type="text" name="type"><button type="submit" >submit</button></form>').show();
+    }
+});
+
+$(document).on('submit', '#addEntryAddress', function(e) {
+    e.preventDefault();
+    var info = {
 
 
+        line1: $('#form form input[name="line1"]').val(),
+        line2: $('#form form input[name="line2"]').val(),
+        city: $('#form form input[name="city"]').val(),
+        state: $('#form form input[name="state"]').val(),
+        zip: $('#form form input[name="zip"]').val(),
+        country: $('#form form input[name="country"]').val(),
+        type: $('#form form input[name="type"]').val(),
 
+    };
+    $('#form').hide('slow');
+    addAddress(info);
+});
 
+$(document).on('submit', '#addEntryPhone', function(e) {
+    e.preventDefault();
 
+    var info = {
+        phoneNumber: $('#form form input[name="phoneNumber"]').val(),
+        type: $('#form form input[name="type"]').val(),
+        phoneType: $('#form form input[name="phoneType"]').val()
+    };
+    $('#form').hide('slow');
+    addPhone(info);
+});
+
+$(document).on('submit', '#addEntryEmail', function(e) {
+    e.preventDefault();
+    var info = {
+        email: $('#form form input[name="email"]').val(),
+        type: $('#form form input[name="type"]').val()
+    };
+    $('#form').hide('slow');
+    addEmail(info);
+});
 
 
 
