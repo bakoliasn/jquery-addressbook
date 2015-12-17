@@ -332,6 +332,177 @@ $(document).on('submit', '#addEntryEmail', function(e) {
 });
 
 
+//delete entries
+
+$(document).on('click', '#deleteEntryPhone', function() {
+    var id = $(this).data('id');
+    var con = confirm('are you sure you want to delete Phone id# ' + id + '???');
+    if (con) {
+        deletePhone(id);
+    }
+});
+
+function deletePhone(id) {
+    return $.ajax({
+        url: API_URL + "/Phones/" + id,
+        type: "DELETE",
+        success: function() {
+            location.reload();
+        }
+    });
+}
+
+$(document).on('click', '#deleteEntryEmail', function() {
+    var id = $(this).data('id');
+    var con = confirm('are you sure you want to delete Email id# ' + id + '???');
+    if (con) {
+        deleteEmail(id);
+    }
+});
+
+function deleteEmail(id) {
+    return $.ajax({
+        url: API_URL + "/EmailAddresses/" + id,
+        type: "DELETE",
+        success: function() {
+            location.reload();
+        }
+    });
+}
+
+$(document).on('click', '#deleteEntryAddress', function() {
+    var id = $(this).data('id');
+    var con = confirm('are you sure you want to delete Address id# ' + id + '???');
+    if (con) {
+        deleteAddress(id);
+    }
+});
+
+function deleteAddress(id) {
+    return $.ajax({
+        url: API_URL + "/Addresses/" + id,
+        type: "DELETE",
+        success: function() {
+            location.reload();
+        }
+    });
+}
+
+
+//Edit Entries
+function editPhone(id, info) {
+    return $.ajax({
+        url: API_URL + "/Phones/" + id,
+        type: 'PUT',
+        success: function() {
+            location.reload();
+        },
+        data: {
+            phoneNumber: info.phoneNumber,
+            type: info.type,
+            phoneType: info.phoneType,
+            entryId: $('#mid-col .content .selected').data('id')
+        }
+    });
+}
+
+$(document).on('click', '#editEntryPhone', function() {
+        $('#form').html('<form id="editPhone" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Phone number</label><input type="text" name="phoneNumber"><label>Type</label><input type="text" name="type"><label>Phone type</label><input type="text" name="phoneType"><button type="submit" >submit</button></form>').show();
+});
+
+
+$(document).on('submit', '#editPhone', function(e) {
+    e.preventDefault();
+    var temp = $('#last-col .content .selected').data('id');
+    var info = {
+        phoneNumber: $('#form form input[name="phoneNumber"]').val(),
+        type: $('#form form input[name="type"]').val(),
+        phoneType: $('#form form input[name="phoneType"]').val()
+    };
+    $('#form').hide('slow');
+    editPhone(temp, info);
+});
+
+function editAddress(id, info) {
+    return $.ajax({
+        url: API_URL + "/Addresses/" + id,
+        type: 'PUT',
+        success: function() {
+            location.reload();
+        },
+        data: {
+            line1: info.line1,
+            line2: info.line2,
+            city: info.city,
+            state: info.state,
+            zip: info.zip,
+            country: info.country,
+            type: info.type,
+            entryId: $('#mid-col .content .selected').data('id')
+        }
+    });
+}
+
+$(document).on('click', '#editEntryAddress', function() {
+        $('#form').html('<form id="editAddresses" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Address line 1</label><input type="text" name="line1"><label>Address line 2</label><input type="text" name="line2"><label>City</label><input type="text" name="city"><label>state</label><input type="text" name="state"><label>zip</label><input type="text" name="zip"><label>country</label><input type="text" name="country"><label>Type</label><input type="text" name="type"><button type="submit" >submit</button></form>').show();
+});
+
+
+$(document).on('submit', '#editAddresses', function(e) {
+    e.preventDefault();
+    var temp = $('#last-col .content .selected').data('id');
+    var info = {
+        line1: $('#form form input[name="line1"]').val(),
+        line2: $('#form form input[name="line2"]').val(),
+        city: $('#form form input[name="city"]').val(),
+        state: $('#form form input[name="state"]').val(),
+        zip: $('#form form input[name="zip"]').val(),
+        country: $('#form form input[name="country"]').val(),
+        type: $('#form form input[name="type"]').val()
+    };
+    $('#form').hide('slow');
+    editAddress(temp, info);
+});
+
+function editEmail(id, info) {
+    return $.ajax({
+        url: API_URL + "/EmailAddresses/" + id,
+        type: 'PUT',
+        success: function() {
+            location.reload();
+        },
+        data: {
+        email: info.email,
+        type: info.type,
+        entryId: $('#mid-col .content .selected').data('id')
+        }
+    });
+}
+
+$(document).on('click', '#editEntryEmail', function() {
+        $('#form').html('<form id="editEmailAddresses" class="bootstrap-frm"><i class="fa fa-times-circle fa-2x" id="closeForm"></i><label>Email</label><input type="text" name="email"><label>Type</label><input type="text" name="type"><button type="submit" >submit</button></form>').show();
+});
+
+
+$(document).on('submit', '#editEmailAddresses', function(e) {
+    e.preventDefault();
+    var temp = $('#last-col .content .selected').data('id');
+    var info = {
+    email: $('#form form input[name="email"]').val(),
+    type: $('#form form input[name="type"]').val()
+    };
+    $('#form').hide('slow');
+    editEmail(temp, info);
+});
+
+
+
+
+
+
+
+
+
 
 
 
@@ -421,21 +592,21 @@ function displayEntry(entryId) {
 
     getEntryPhone(entryId).then(function(result) {
         result.forEach(function(ab) {
-            $('#last-col .content').append('<article class="entries phoneEntry" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editAb" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteAb" data-id=' + ab.id + '></i>' + ab.phoneType + ': ' + ab.phoneNumber + '</article>');
+            $('#last-col .content').append('<article class="entries phoneEntry" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editEntryPhone" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteEntryPhone" data-id=' + ab.id + '></i>' + ab.phoneType + ': ' + ab.phoneNumber + '</article>');
         });
 
         return getEntryAddress(entryId);
     }).then(function(result) {
 
         result.forEach(function(ab) {
-            $('#last-col .content').append('<article class="entries addressEntry" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editAb" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteAb" data-id=' + ab.id + '></i><p>' + ab.type + '</p><p>' + ab.line1 + ' ' + ab.line2 + '</p><p>' + ab.city + ' ' + ab.state + ' ' + ab.country + '</p><p>' + ab.zip + '</p></article>');
+            $('#last-col .content').append('<article class="entries addressEntry" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editEntryAddress" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteEntryAddress" data-id=' + ab.id + '></i><p>' + ab.type + '</p><p>' + ab.line1 + ' ' + ab.line2 + '</p><p>' + ab.city + ' ' + ab.state + ' ' + ab.country + '</p><p>' + ab.zip + '</p></article>');
         });
 
         return getEntryEmail(entryId);
     }).then(function(result) {
 
         result.forEach(function(ab) {
-            $('#last-col .content').append('<article class="entries emailEntry" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editAb" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteAb" data-id=' + ab.id + '></i>' + ab.type + ': ' + ab.email + '</article>');
+            $('#last-col .content').append('<article class="entries emailEntry" data-id=' + ab.id + '><i class="fa fa-pencil fa-2x" id="editEntryEmail" data-id=' + ab.id + '></i><i class="fa fa-minus-square-o fa-2x" id="deleteEntryEmail" data-id=' + ab.id + '></i>' + ab.type + ': ' + ab.email + '</article>');
         });
 
         $('#last-col').pajinate({
@@ -452,7 +623,7 @@ function displayEntry(entryId) {
 
 
 $(document).on('click', '.entries', function() {
-    if ($(event.target).is('#editE') || $(event.target).is('#deleteE')) {
+    if ($(event.target).is('#editEntryAddress') || $(event.target).is('#deleteEntryAddress') || $(event.target).is('#editEntryPhone')|| $(event.target).is('#deleteEntryPhone')|| $(event.target).is('#editEntryEmail')|| $(event.target).is('#deleteEntryEmail')) {
 
     }
     else {

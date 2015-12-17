@@ -1,8 +1,6 @@
-add,edit and delete buttons
+edit and delete buttons
 search
 favorites
-unnessicary classes on form
-add defaults to the forms with "selected"
 
 
 # jQuery Address Book
